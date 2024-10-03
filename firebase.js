@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
@@ -102,6 +102,12 @@ function createSnapshotCard(childSnapshot) {
 
   // Append the complete card to the document
   document.querySelector('.snapshots-collection').appendChild(cardContainer);
+
+  // EVENT LISTENERS
+  cardContainer.addEventListener('click', () => {
+    const currentDisplay = window.getComputedStyle(cardDetailsContainer).display;
+    cardDetailsContainer.style.display = currentDisplay === 'none' ? 'flex' : 'none';
+  });
 }
 
 
@@ -121,7 +127,7 @@ function createCardDetails(imageData, descriptionData, impactData, wowData, reso
 
   const firstItemText = document.createElement('div');
   firstItemText.classList.add('snapshot-card-details-item-first-text');
-  firstItemText.innerHTML = `<div class="details-title">TITLE</div>${descriptionData}`;
+  firstItemText.innerHTML = `<div class="details-title">What?</div>${descriptionData}`;
   firstItem.appendChild(firstItemImage);
   firstItem.appendChild(firstItemText);
   detailsContainer.appendChild(firstItem);
@@ -173,4 +179,6 @@ function createDetailsItem(icon, title, content, color, subtitle = '') {
 
   return item;
 }
+
+
 
