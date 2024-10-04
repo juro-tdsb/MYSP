@@ -245,6 +245,7 @@ body {
     flex-direction: row;
     gap: 12px;
     align-items: start;
+    max-width: 100%;
 }
 
 .details-title {

@@ -37,6 +37,7 @@ function loadSnapShotData() {
 
 function createSnapshotCard(childSnapshot) {
   const bpNameData = childSnapshot.val()["BP Name"];
+  const priorityData = childSnapshot.val()["MYSP Priority"];
   const schoolNameData = childSnapshot.val()["Schools Department Name"];
   const gradeData = childSnapshot.val()["Grade Levels "];
   const timeData = childSnapshot.val()["BP Implentation Timeframe"];
@@ -47,6 +48,7 @@ function createSnapshotCard(childSnapshot) {
   const resourceData = childSnapshot.val()["Additional Resources "];
   const contactData = childSnapshot.val()["Key Contact(s)"];
 
+
   // Card container
   const cardContainer = document.createElement('div');
   cardContainer.classList.add('snapshot-single');
@@ -54,13 +56,25 @@ function createSnapshotCard(childSnapshot) {
   // Snapshot card container (main part of the card)
   const snapshotCardContainer = document.createElement('div');
   snapshotCardContainer.classList.add('snapshot-card-container');
-  snapshotCardContainer.style.backgroundColor = 'rgb(246, 179, 79)';
+  // snapshotCardContainer.style.backgroundColor = 'rgb(246, 179, 79)';
+
+  // Protity and Colors
+  const bgColors = {
+    achieve: '#f6b34f',
+    belong: '#9fca71',
+    revitalize: '#f1c40f',
+    thrive: '#5dade2'
+  }
+  // Default color too
+  const backgroundColor = bgColors[priorityData.toLowerCase()] || 'rgb(246, 179, 79)';
+  snapshotCardContainer.style.backgroundColor = backgroundColor;
+
 
   // Image section
   const snapshotCardImage = document.createElement('div');
   snapshotCardImage.classList.add('snapshot-card-image');
   const imgElement = document.createElement('img');
-  imgElement.src = './assets/achieve.png'; // Default image
+  imgElement.src = `./assets/${priorityData}.png`; // Default image
   snapshotCardImage.appendChild(imgElement);
 
   // Text section (title and description)
@@ -76,7 +90,7 @@ function createSnapshotCard(childSnapshot) {
   snapshotDescription.id = 'snapshot-description';
   snapshotDescription.innerHTML = `
       <div>${schoolNameData}</div>
-      <div>${gradeData}</div>
+      <div>Grade ${gradeData} Students</div>
       <div>${timeData}</div>
   `;
   snapshotCardText.appendChild(snapshotDescription);
@@ -141,7 +155,13 @@ function createCardDetails(imageData, descriptionData, impactData, wowData, reso
   detailsContainer.appendChild(wowItem);
 
   // Resources item
-  const resourcesItem = createDetailsItem('auto_stories', 'Resources', `<a href="#">${resourceData}</a>`, '#3B71CA');
+  const resourcesArray = resourceData.split(',');
+  let links = ''; // Initialize an empty string to hold all <a> tags
+  // Loop through the array to create each <a> tag
+  resourcesArray.forEach((resource, index) => {
+    links += `<a href="${resource}">Click ${index + 1}</a><br><br>`; // Add <a> tag and separate with <br><br>
+  });
+    const resourcesItem = createDetailsItem('auto_stories', 'Resources', links, '#3B71CA');
   detailsContainer.appendChild(resourcesItem);
 
   // Contact item
