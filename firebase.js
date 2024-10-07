@@ -62,8 +62,9 @@ function createSnapshotCard(childSnapshot) {
   const bgColors = {
     achieve: '#f6b34f',
     belong: '#9fca71',
-    revitalize: '#f1c40f',
-    thrive: '#5dade2'
+    revitalize: '#f4d03f',
+    thrive: '#5dade2',
+    "truth and reconciliation": '#da8ee7'
   }
   // Default color too
   const backgroundColor = bgColors[priorityData.toLowerCase()] || 'rgb(246, 179, 79)';
@@ -114,6 +115,8 @@ function createSnapshotCard(childSnapshot) {
   const cardDetailsContainer = createCardDetails(imageData, descriptionData, impactData, wowData, resourceData, contactData);
   cardContainer.appendChild(cardDetailsContainer);
 
+  // Add the category attribute to the card
+  cardContainer.setAttribute("category", `${priorityData}`);
   // Append the complete card to the document
   document.querySelector('.snapshots-collection').appendChild(cardContainer);
 
@@ -147,11 +150,11 @@ function createCardDetails(imageData, descriptionData, impactData, wowData, reso
   detailsContainer.appendChild(firstItem);
 
   // Impact item
-  const impactItem = createDetailsItem('kid_star', 'Impact', impactData, '#E4A11B');
+  const impactItem = createDetailsItem('impact', 'How has this practice positively impacted students?', impactData);
   detailsContainer.appendChild(impactItem);
 
   // WOW! item
-  const wowItem = createDetailsItem('sentiment_very_satisfied', 'WOW!', wowData, '#14A44D', 'What are your words of wisdom for adopting this practice?');
+  const wowItem = createDetailsItem('wow', 'What are your words of wisdom for adopting this practice?', wowData);
   detailsContainer.appendChild(wowItem);
 
   // Resources item
@@ -161,11 +164,11 @@ function createCardDetails(imageData, descriptionData, impactData, wowData, reso
   resourcesArray.forEach((resource, index) => {
     links += `<a href="${resource}">Click ${index + 1}</a><br><br>`; // Add <a> tag and separate with <br><br>
   });
-    const resourcesItem = createDetailsItem('auto_stories', 'Resources', links, '#3B71CA');
+    const resourcesItem = createDetailsItem('resources', 'Additional Resources:', links);
   detailsContainer.appendChild(resourcesItem);
 
   // Contact item
-  const contactItem = createDetailsItem('question_mark', 'Want to know more?', `Contact: <a href="#">${contactData}</a>`, '#e93734');
+  const contactItem = createDetailsItem('resources', 'Want to know more?', `Contact: <a href="#">${contactData}</a>`);
   detailsContainer.appendChild(contactItem);
 
   return detailsContainer;
@@ -173,22 +176,18 @@ function createCardDetails(imageData, descriptionData, impactData, wowData, reso
 
 
 // Helper function to create individual detail items
-function createDetailsItem(icon, title, content, color, subtitle = '') {
+function createDetailsItem(imgName, title, content) {
   const item = document.createElement('div');
   item.classList.add('snapshot-card-details-item');
 
   const iconDiv = document.createElement('div');
-  iconDiv.style.fontVariationSettings = "'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48";
-  iconDiv.style.color = color;
-  iconDiv.classList.add('details-icon');
-  const iconSpan = document.createElement('span');
-  iconSpan.classList.add('material-symbols-outlined');
-  iconSpan.textContent = icon;
-  iconDiv.appendChild(iconSpan);
+  const imgElement = document.createElement('img');
+  imgElement.src = `./assets/${imgName}.png`;
+  iconDiv.appendChild(imgElement);
 
   const titleDiv = document.createElement('div');
   titleDiv.classList.add('details-title');
-  titleDiv.innerHTML = `${title}${subtitle ? `<div class="details-subtitle">${subtitle}</div>` : ''}`;
+  titleDiv.innerHTML = `${title}`;
 
   const contentDiv = document.createElement('div');
   contentDiv.innerHTML = content;

@@ -15,9 +15,12 @@ snapShotCards.forEach(card => {
 // Seachbar logic  ----------------------------------------
 const searchInput = document.getElementById('snapshots-search');
 const closeIcon = document.getElementById('close-icon');
+const dropdownInput = document.getElementById('snapshot-dropdown');
+
 
 function performSearch() {
     const searchQuery = document.getElementById('snapshots-search').value.toLowerCase();
+    const filterValue = document.getElementById('snapshot-dropdown').value.toLowerCase();
     
     // Get all snapshot cards
     const cards = document.querySelectorAll('.snapshot-single');
@@ -25,6 +28,8 @@ function performSearch() {
     cards.forEach(card => {
         const title = card.querySelector('#snapshot-title').textContent.toLowerCase();
         const description = card.querySelectorAll('.snapshot-description div');
+        const category = card.getAttribute('category').toLowerCase();
+
         let descMatch = false;
         
         // Check description divs
@@ -35,8 +40,11 @@ function performSearch() {
             }
         });
 
-        // Show the entire row if the main content or any sub-content matches the search
-        if (title.includes(searchQuery) || descMatch) {
+        const searchMatch = title.includes(searchQuery) || descMatch;
+        const filterMatch = filterValue === 'strategic direction' || category === filterValue;
+
+        // Show the entire row if the main content or any sub-content matches the search and filter
+        if (searchMatch && filterMatch) {
             card.style.display = '';  // Show the row
         } else {
             card.style.display = 'none';  // Hide the row if no match
@@ -48,10 +56,8 @@ function performSearch() {
 document.getElementById('magnify-icon').addEventListener('click', performSearch);
 
 // Trigger search when the Enter key is pressed inside the input field
-searchInput.addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        performSearch();
-    }
+searchInput.addEventListener('input', function(e) {
+    performSearch();
 });
 
 // Show/hide the close icon based on input content
@@ -67,6 +73,7 @@ searchInput.addEventListener('input', function() {
 closeIcon.addEventListener('click', function() {
     searchInput.value = '';
     closeIcon.style.display = 'none';
+    dropdownInput.value = 'strategic direction';
     resetSearch();
 })
 
@@ -77,6 +84,14 @@ function resetSearch() {
         card.style.display = '';  // Show all rows (reset state)
     });
 }
+
+// Dropdown logic -------------------------------------
+dropdownInput.addEventListener('change', function() {
+    console.log('Yes');
+    performSearch();
+})
+
+
 
 // Favorite Button Logic ------------------------------
 // document.getElementById('favorite-button').addEventListener('click', function() {
@@ -90,17 +105,17 @@ function resetSearch() {
 //     }
 // })
 
-document.querySelectorAll('.favorite-button').forEach(function(button) {
-    button.addEventListener('click', function() {
-        // Check if the button has the 'favorite-container' class
-        if (button.firstElementChild.classList.contains('favorite-container')) {
-            button.firstElementChild.classList.replace('favorite-container', 'favorite-container-clicked');
-            button.firstElementChild.querySelector('#favorite-button-text').textContent = 'Added to favorites';
+// document.querySelectorAll('.favorite-button').forEach(function(button) {
+//     button.addEventListener('click', function() {
+//         // Check if the button has the 'favorite-container' class
+//         if (button.firstElementChild.classList.contains('favorite-container')) {
+//             button.firstElementChild.classList.replace('favorite-container', 'favorite-container-clicked');
+//             button.firstElementChild.querySelector('#favorite-button-text').textContent = 'Added to favorites';
 
-        // Check if the button has the 'favorite-container-clicked' class
-        } else if (button.firstElementChild.classList.contains('favorite-container-clicked')) {
-            button.firstElementChild.classList.replace('favorite-container-clicked', 'favorite-container');
-            button.firstElementChild.querySelector('#favorite-button-text').textContent = 'Add to favorites';
-        }
-    });
-});
+//         // Check if the button has the 'favorite-container-clicked' class
+//         } else if (button.firstElementChild.classList.contains('favorite-container-clicked')) {
+//             button.firstElementChild.classList.replace('favorite-container-clicked', 'favorite-container');
+//             button.firstElementChild.querySelector('#favorite-button-text').textContent = 'Add to favorites';
+//         }
+//     });
+// });
