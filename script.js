@@ -87,35 +87,16 @@ function resetSearch() {
 
 // Dropdown logic -------------------------------------
 dropdownInput.addEventListener('change', function() {
-    console.log('Yes');
     performSearch();
 })
 
+dropdownInput.addEventListener("change", function() {
+    if (dropdownInput.value !== "strategic direction") {
+        // Change background color if a value is selected
+        dropdownInput.style.border = "2px solid #00A4A6";  // You can change this color as per your requirement
+    } else {
+        // Reset background color if the default value is selected
+        dropdownInput.style.border = "";
+    }
+});
 
-
-// Favorite Button Logic ------------------------------
-// document.getElementById('favorite-button').addEventListener('click', function() {
-//     if (this.classList.contains('favorite-container')) {
-//         this.classList.replace('favorite-container', 'favorite-container-clicked');
-//         document.querySelector('#favorite-button-text').textContent = 'Added to favorites';
-
-//     } else if (this.classList.contains('favorite-container-clicked')) {
-//         this.classList.replace('favorite-container-clicked', 'favorite-container');
-//         document.querySelector('#favorite-button-text').textContent = 'Add to favorites';
-//     }
-// })
-
-// document.querySelectorAll('.favorite-button').forEach(function(button) {
-//     button.addEventListener('click', function() {
-//         // Check if the button has the 'favorite-container' class
-//         if (button.firstElementChild.classList.contains('favorite-container')) {
-//             button.firstElementChild.classList.replace('favorite-container', 'favorite-container-clicked');
-//             button.firstElementChild.querySelector('#favorite-button-text').textContent = 'Added to favorites';
-
-//         // Check if the button has the 'favorite-container-clicked' class
-//         } else if (button.firstElementChild.classList.contains('favorite-container-clicked')) {
-//             button.firstElementChild.classList.replace('favorite-container-clicked', 'favorite-container');
-//             button.firstElementChild.querySelector('#favorite-button-text').textContent = 'Add to favorites';
-//         }
-//     });
-// });

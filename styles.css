@@ -10,6 +10,7 @@ body {
     width: 100%;
     max-width: 100%;
     height: auto;
+    border-radius: 6px;
 }
 
 .featured-container {
@@ -272,6 +273,8 @@ body {
 .snapshot-card-details-item-first-text {
     flex: 2;
     -ms-flex-item-align: center;
+    padding-left: 6%;
+
 } 
 
 .snapshot-card-details-item-first-img {
@@ -282,4 +285,8 @@ body {
 .snapshot-card-details-item-first img {
     max-width: 100%;
     border-radius: 6px;
+}
+
+.snapshot-card-details-icon img {
+    width: 120px;
 }
